@@ -13,14 +13,20 @@ def decimal_to_hex(decimal_value):
         num //= 16
 
     print(f"Hexadecimal representation is: {hexadecimal}")
-    return hexadecimal  # Return the hexadecimal value for testing
+    return hexadecimal  # Return for testing
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        try:
-            decimal_value = int(sys.argv[1])
-            decimal_to_hex(decimal_value)
-        except ValueError:
-            print("Please provide a valid integer.")
-    else:
-        print("Usage: python script.py <decimal_number>")
+    # Check if an input argument is provided
+    if len(sys.argv) < 2:
+        print("Error: No input provided.")
+        sys.exit(1)  # Exit with error code 1
+
+    try:
+        # Convert input to integer
+        decimal_value = int(sys.argv[1])
+        hex_result = decimal_to_hex(decimal_value)
+        print(f"Hexadecimal representation is: {hex_result}")
+    except ValueError:
+        # Handle non-integer input
+        print("Error: Invalid integer input.")
+        sys.exit(1)  # Exit with error code 1
