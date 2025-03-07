@@ -28,6 +28,6 @@ if __name__ == "__main__":
         hex_result = decimal_to_hex(decimal_value)
         print(f"Hexadecimal representation is: {hex_result}")
     except ValueError:
-        print("Error: Invalid input. Plz enter an integer.")
+        print("Error: Invalid input. Please enter an integer.")
         sys.exit(0)  # Do not fail the Jenkins build for invalid input
 
