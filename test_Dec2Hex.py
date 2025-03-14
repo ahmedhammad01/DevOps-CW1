@@ -2,7 +2,7 @@ import unittest
 import subprocess
 
 class TestDecimalToHex(unittest.TestCase):
-    
+
     def test_no_input_provided(self):
         """Test case for no input provided."""
         result = subprocess.run(["python3", "Dec2Hex.py"], capture_output=True, text=True)
