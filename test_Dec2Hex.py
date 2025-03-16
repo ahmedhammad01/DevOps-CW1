@@ -1,18 +1,19 @@
 import unittest
-import subprocess
+from Dec2Hex import decimal_to_hex
 
 class TestDecimalToHex(unittest.TestCase):
-    
+
+    def test_valid_integer_input(self):
+        self.assertEqual(decimal_to_hex(10), "A")
+        self.assertEqual(decimal_to_hex(255), "FF")
+
     def test_no_input_provided(self):
-        """Test case for no input provided."""
-        result = subprocess.run(["python3", "Dec2Hex.py"], capture_output=True, text=True)
-        self.assertIn("Warning: No input provided. Please enter a number.", result.stdout)
+        with self.assertRaises(SystemExit):
+            decimal_to_hex()
 
     def test_non_integer_input(self):
-        """Test case for non-integer input."""
-        result = subprocess.run(["python3", "Dec2Hex.py", "abc"], capture_output=True, text=True)
-        self.assertIn("Error: Invalid input. Please enter an integer.", result.stdout)
+        with self.assertRaises(ValueError):
+            decimal_to_hex("abc")
 
 if __name__ == "__main__":
     unittest.main()
-
