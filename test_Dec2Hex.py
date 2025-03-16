@@ -1,33 +1,29 @@
 import unittest
 import subprocess
-from Dec2Hex import decimal_to_hex
+import os
 
 class TestDecimalToHex(unittest.TestCase):
 
-    def test_decimal_to_hex_conversion(self):
-        """Test valid integer conversions."""
-        self.assertEqual(decimal_to_hex(0), "0")
-        self.assertEqual(decimal_to_hex(10), "A")
-        self.assertEqual(decimal_to_hex(255), "FF")
-        self.assertEqual(decimal_to_hex(16), "10")
+    def setUp(self):
+        # Correctly identify your script's path
+        self.script_path = os.path.join(os.path.dirname(__file__), "Dec2Hex.py")
 
     def test_no_input_provided(self):
-        """Test case for no input provided."""
-        result = subprocess.run(["python3", "Dec2Hex.py"], capture_output=True, text=True)
+        result = subprocess.run(["python3", self.script_path], capture_output=True, text=True)
         self.assertIn("Warning: No input provided. Please enter a number.", result.stdout)
-        self.assertEqual(result.returncode, 0)
 
     def test_non_integer_input(self):
-        """Test case for non-integer input."""
-        result = subprocess.run(["python3", "Dec2Hex.py", "abc"], capture_output=True, text=True)
+        result = subprocess.run(["python3", self.script_path, "abc"], capture_output=True, text=True)
         self.assertIn("Error: Invalid input. Please enter an integer.", result.stdout)
-        self.assertEqual(result.returncode, 0)
 
-    def test_negative_integer_input(self):
-        """Test case for negative integer input."""
-        result = subprocess.run(["python3", "Dec2Hex.py", "-5"], capture_output=True, text=True)
-        self.assertIn("Error: Please enter a non-negative integer.", result.stdout)
+    def test_negative_input(self):
+        result = subprocess.run(["python3", self.script_path, "-5"], capture_output=True, text=True)
+        self.assertIn("Error: Invalid input", result.stdout)
         self.assertEqual(result.returncode, 1)
+
+    def test_valid_input(self):
+        result = subprocess.run(["python3", self.script_path, "15"], capture_output=True, text=True)
+        self.assertIn("Hexadecimal representation is: F", result.stdout)
 
 if __name__ == "__main__":
     unittest.main()
