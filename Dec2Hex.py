@@ -4,11 +4,7 @@ HEX_BASE = 16
 HEX_CHARS = "0123456789ABCDEF"
 
 def decimal_to_hex(decimal_value):
-    """Convert decimal number to hexadecimal."""
-    if not isinstance(decimal_value, int):
-        raise ValueError("Error: Invalid input. Please enter an integer.")
-    if decimal_value < 0:
-        raise ValueError("Error: Invalid input. Input must be non-negative.")
+    """Convert a decimal number to hexadecimal representation."""
     if decimal_value == 0:
         return "0"
     hexadecimal = ""
@@ -20,22 +16,17 @@ def decimal_to_hex(decimal_value):
     return hexadecimal
 
 if __name__ == "__main__":
-    import sys
-
-    HEX_BASE = 16
-    HEX_CHARS = "0123456789ABCDEF"
-
     if len(sys.argv) < 2:
         print("Warning: No input provided. Please enter a number.")
-        sys.exit(0)
-
+        sys.exit(0)  # Do not fail the Jenkins build for missing input
+    
     try:
         decimal_value = int(sys.argv[1])
         if decimal_value < 0:
-            print("Error: Invalid input. Input must be non-negative.")
-            sys.exit(1)
+            print("Error: Please enter a non-negative integer.")
+            sys.exit(1)  # Jenkins should fail if the input is invalid
         hex_result = decimal_to_hex(decimal_value)
         print(f"Hexadecimal representation is: {hex_result}")
     except ValueError:
         print("Error: Invalid input. Please enter an integer.")
-        sys.exit(0)
+        sys.exit(0)  # Do not fail the Jenkins build for invalid input
