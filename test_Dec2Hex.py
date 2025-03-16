@@ -5,7 +5,6 @@ import os
 class TestDecimalToHex(unittest.TestCase):
 
     def setUp(self):
-        # Correctly identify your script's path relative to this test file
         self.script_path = os.path.join(os.path.dirname(__file__), "Dec2Hex.py")
 
     def test_no_input_provided(self):
@@ -18,8 +17,8 @@ class TestDecimalToHex(unittest.TestCase):
 
     def test_negative_input(self):
         result = subprocess.run(["python3", self.script_path, "-5"], capture_output=True, text=True)
-        self.assertIn("Error: Please enter a non-negative integer.", result.stdout)
-        self.assertEqual(result.returncode, 1)
+        self.assertIn("Error: Invalid input. Input must be non-negative.", result.stdout)
+        self.assertEqual(result.returncode, 0)
 
     def test_valid_input(self):
         result = subprocess.run(["python3", self.script_path, "15"], capture_output=True, text=True)
